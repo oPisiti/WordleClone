@@ -24,8 +24,8 @@ class Key{
 
     render(){
         noStroke();
-        if(this.mOver) fill(this.backColors[this.state]);
-        else            fill(this.backColors["mOver"]);
+        if(!this.mOver) fill(this.backColors[this.state]);
+        else           fill(this.backColors["mOver"]);
         rect(this.pos.x, this.pos.y, this.boxSize.x, this.boxSize.y, 10);
        
         textAlign(CENTER, CENTER);
@@ -62,6 +62,7 @@ class Keyboard{
             y:5
         }
         this.lineDeltaSpacing = 0.25;   // How much to shift the first item in a row, based on the previous. Fraction of a boxSize
+        
         // Design 
         this.newLine = ["a", "z"];      // When to start a new line when rendering
 
@@ -138,8 +139,8 @@ class Keyboard{
     // If mouse is over any of the keys
     collision(){
         for(key of this.keys){
-            key.mOver = true;
-            if(key.mouseOver()) key.mOver = false;
+            key.mOver = false;
+            if(key.mouseOver()) key.mOver = true;
         }
     }
 }
