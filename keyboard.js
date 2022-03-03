@@ -15,14 +15,17 @@ class Key{
 
         this.state = "av";
         this.backColors = {
-            "av":    [50, 200, 50],
+            "av":    [120, 78, 186],
             "unav":  [50, 50, 50],
+            "mOver": [27, 166, 15]
         }       
+        this.mOver = false;
     }
 
     render(){
         noStroke();
-        fill(this.backColors[this.state]);
+        if(this.mOver) fill(this.backColors[this.state]);
+        else            fill(this.backColors["mOver"]);
         rect(this.pos.x, this.pos.y, this.boxSize.x, this.boxSize.y, 10);
        
         textAlign(CENTER, CENTER);
@@ -31,9 +34,10 @@ class Key{
         text(this.key.letter, this.pos.x + this.boxSizeHalf.x, this.pos.y + this.boxSizeHalf.y);
     }
 
-    // collision(){
-    //     return mouseX()>= this.
-    // }
+    mouseOver(){
+        return mouseX>=this.pos.x && mouseX<=(this.pos.x + this.boxSize.x) &&
+               mouseY>=this.pos.y && mouseY<=(this.pos.y + this.boxSize.y)
+    }
 }
 
 class Keyboard{
@@ -128,6 +132,14 @@ class Keyboard{
             this.keys[i].pos = {... position};
 
             position.x += this.boxSize.x + this.keySpacing.x;  
+        }
+    }
+
+    // If mouse is over any of the keys
+    collision(){
+        for(key of this.keys){
+            key.mOver = true;
+            if(key.mouseOver()) key.mOver = false;
         }
     }
 }

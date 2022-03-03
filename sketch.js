@@ -9,8 +9,9 @@ function setup(){
 
 function draw(){
   background(backColor);
+  keyboard.collision();
   keyboard.render();
-  noLoop();   
+  // noLoop();   
 }
 
 // How to resize and remove scrollbars
