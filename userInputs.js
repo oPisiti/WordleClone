@@ -1,11 +1,11 @@
 class RowOfInputs{
-    constructor(startPos, boxSize, keySpacing, wordSize){
+    constructor(startPos, boxSize, keySpacing, wordSize, letterRenderSize){
         this.wordSize = wordSize;
         this.word = [];
         let pos = {... startPos};
          
         for(let i = 0; i < this.wordSize; i++){
-            this.word.push(new Key(" ", pos, boxSize));
+            this.word.push(new Key("", pos, boxSize, letterRenderSize));
             pos.x += boxSize.x + keySpacing.x; 
         }
     }
@@ -13,6 +13,7 @@ class RowOfInputs{
     render(){
         for(let i = 0; i < this.wordSize; i++){
             this.word[i].render();
+            if(this.word[i].selected) this.word[i].renderSelected();
         }
     }
 }
@@ -35,7 +36,7 @@ class InputsTable{
          
         this.rows = [];
         for(let i = 0; i < nRows; i++){
-            this.rows.push(new RowOfInputs(this.initPosition, this.boxSize, this.keySpacing, wordSize));
+            this.rows.push(new RowOfInputs(this.initPosition, this.boxSize, this.keySpacing, wordSize, 50));
             this.initPosition.y += this.boxSize.y + this.keySpacing.y;            
         }  
 

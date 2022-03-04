@@ -1,31 +1,38 @@
 class Key{
-    constructor(letter, position, boxSize){
+    constructor(letter, position, boxSize, letterRenderSize = 32){
+        // Base configurations
         this.pos = {... position};
         this.boxSize = boxSize;
         this.boxSizeHalf = {
             x: boxSize.x/2,
             y: boxSize.y/2,
         }
-
         this.key = {
             letter: letter,
             color: [250, 250, 250],
-            size: 32,
+            size: letterRenderSize,
         }
 
         this.state = "av";
         this.backColors = {
-            "av":    [120, 78, 186],
-            "unav":  [50, 50, 50],
-            "mOver": [27, 166, 15]
-        }       
+            "av":       [120, 78, 186],
+            "unav":     [50, 50, 50],
+            "mOver":    [27, 166, 15],
+            "selected": [20, 20, 20]
+        }     
         this.mOver = false;
+
+        this.selected = false;  
+        this.selectedBarSize = {        // Bar Size in relation to boxSize
+            x:0.8,
+            y:0.1
+        }
     }
 
     render(){
         noStroke();
         if(!this.mOver) fill(this.backColors[this.state]);
-        else           fill(this.backColors["mOver"]);
+        else            fill(this.backColors["mOver"]);
         rect(this.pos.x, this.pos.y, this.boxSize.x, this.boxSize.y, 10);
        
         textAlign(CENTER, CENTER);
@@ -37,6 +44,17 @@ class Key{
     mouseOver(){
         return mouseX>=this.pos.x && mouseX<=(this.pos.x + this.boxSize.x) &&
                mouseY>=this.pos.y && mouseY<=(this.pos.y + this.boxSize.y)
+    }
+
+    // Visual representation that this key is selected 
+    // Used to indicate which position of input table is selected
+    renderSelected(){
+        fill(this.backColors["selected"]);
+        rect(this.pos.x + (1 - this.selectedBarSize.x)/2 * this.boxSize.x,
+             this.pos.y + (1 - this.selectedBarSize.y*2) * this.boxSize.y,
+             this.boxSize.x * this.selectedBarSize.x,
+             this.boxSize.y * this.selectedBarSize.y,
+             4);
     }
 }
 
@@ -138,10 +156,14 @@ class Keyboard{
 
     // If mouse is over any of the keys
     collision(){
-        for(key of this.keys){
-            key.mOver = false;
-            if(key.mouseOver()) key.mOver = true;
+        for(key of this.keys) key.mOver = false;    // Resetting all
+        for(key of this.keys){                      // Returning collision 
+            if(key.mouseOver()){
+                key.mOver = true;
+                return key.key.letter
+            }
         }
+        return false
     }
 }
 
