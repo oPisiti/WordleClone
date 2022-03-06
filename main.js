@@ -14,8 +14,7 @@ function setup(){
   createCanvas(windowWidth, windowHeight);
   background(backColor);
   keyboard = new Keyboard();
-  inputs = new InputsTable(wordSize, nRows);
-  selectNewBox({x: 0, y:0});                  // Selecting the first box
+  inputs = new InputsTable(wordSize, nRows);               
 }
 
 function draw(){
@@ -24,14 +23,8 @@ function draw(){
   // Selecting and applying stuff
   if (mouseIsPressed) {    
     // Inputs table
-    for(let i = 0; i < inputs.rows.length; i++){
-      for(let j = 0; j < inputs.rows[i].word.length; j++){
-        if(inputs.rows[i].word[j].mouseOver()){
-          selectNewBox({x:j, y:i});
-          break;
-        }
-      }
-    }
+    inputs.selectNewBox();
+    
   }
 
   // User Input Rows stuff
@@ -56,15 +49,6 @@ function windowResized() {
   keyboard.center();
 }
 
-function selectNewBox(newPos){
-  // Deselecting latest box
-  inputs.rows[selectedBox.y].word[selectedBox.x].selected = false;
-
-  selectedBox = {... newPos};
-
-  // Selecting new box
-  inputs.rows[selectedBox.y].word[selectedBox.x].selected = true;
-}
 
 // Sets a letter into the selected inputs table box
 function setLetterToInputsTable(inputs, letterToSet){
@@ -72,7 +56,8 @@ function setLetterToInputsTable(inputs, letterToSet){
   for(let row of inputs.rows){
     for(let letter of row.word){
       if(letter.selected){          
-        letter.key.letter = letterToSet;
+        if(letterToSet == "←")  letter.key.letter = "";
+        else letter.key.letter = letterToSet;
         break;
       }
     }

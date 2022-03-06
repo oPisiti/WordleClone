@@ -61,7 +61,7 @@ class Key{
 class Keyboard{
     constructor(){
         this.lettersList = "qwertyuiopasdfghjkl←zxcvbnm";
-        
+
         // Configurations
         this.boxSize = {                 // Background boxes sizes
             x:75,

@@ -20,6 +20,9 @@ class RowOfInputs{
 
 class InputsTable{
     constructor(wordSize, nRows){
+        // The only row the user is allowed to modify
+        this.currentRow = 0;
+
         // Configurations
         this.boxSize = {                // Background boxes sizes
             x:75,
@@ -39,6 +42,9 @@ class InputsTable{
             this.rows.push(new RowOfInputs(this.initPosition, this.boxSize, this.keySpacing, wordSize, 50));
             this.initPosition.y += this.boxSize.y + this.keySpacing.y;            
         }  
+
+        // Selecting the first box
+        this.rows[this.currentRow].word[0].selected = true;
 
         this.center();
     }
@@ -81,4 +87,38 @@ class InputsTable{
             position.x = this.initPosition.x;   
         }  
     }
+
+    // Selects a new box based on collision
+    selectNewBox(){
+        let oldSelectedJ;
+        let selectedNewBox = false;
+
+        // Getting the j position for the current selection
+        for(let j = 0; j < this.rows[this.currentRow].word.length; j++){
+            if(this.rows[this.currentRow].word[j].selected){
+                console.log("Selected box: ", {row:this.currentRow, column:j});
+                oldSelectedJ = j;                
+                break;
+            }
+        }
+        
+
+        // Selecting new box, if collision happens
+        for(let j = 0; j < this.rows[this.currentRow].word.length; j++){
+            if(this.rows[this.currentRow].word[j].mouseOver()){   
+                if(j != oldSelectedJ){  
+                    this.rows[this.currentRow].word[j].selected = true;  
+                    selectedNewBox = true;  
+                    break;
+                }
+            }
+        }      
+        console.log("selectedNewBox: ", selectedNewBox); 
+
+        // Deselecting latest box
+        if(selectedNewBox){
+            this.rows[this.currentRow].word[oldSelectedJ].selected = false;
+        }
+    }
+      
 }
