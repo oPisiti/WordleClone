@@ -34,7 +34,7 @@ function draw(){
   // Getting keyboard presses and passing that into inputs table
   let clickedKeyboardKey = keyboard.collision();
   if(clickedKeyboardKey && mouseIsPressed){
-    setLetterToInputsTable(inputs, clickedKeyboardKey);
+    inputs.setLetter(clickedKeyboardKey);
   }
   keyboard.render();
 
@@ -49,17 +49,6 @@ function windowResized() {
   keyboard.center();
 }
 
-
-// Sets a letter into the selected inputs table box
-function setLetterToInputsTable(inputs, letterToSet){
-  // Searching for the selected inputs table's box
-  for(let row of inputs.rows){
-    for(let letter of row.word){
-      if(letter.selected){          
-        if(letterToSet == "←")  letter.key.letter = "";
-        else letter.key.letter = letterToSet;
-        break;
-      }
-    }
-  }
+function mouseReleased(event) {
+  if(keyboard.collision()) inputs.selectNextBox();
 }

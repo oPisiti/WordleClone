@@ -36,7 +36,8 @@ class InputsTable{
             x:5,
             y:5
         }
-         
+        this.wordSize = wordSize;
+        
         this.rows = [];
         for(let i = 0; i < nRows; i++){
             this.rows.push(new RowOfInputs(this.initPosition, this.boxSize, this.keySpacing, wordSize, 50));
@@ -96,7 +97,6 @@ class InputsTable{
         // Getting the j position for the current selection
         for(let j = 0; j < this.rows[this.currentRow].word.length; j++){
             if(this.rows[this.currentRow].word[j].selected){
-                console.log("Selected box: ", {row:this.currentRow, column:j});
                 oldSelectedJ = j;                
                 break;
             }
@@ -113,12 +113,82 @@ class InputsTable{
                 }
             }
         }      
-        console.log("selectedNewBox: ", selectedNewBox); 
 
         // Deselecting latest box
         if(selectedNewBox){
             this.rows[this.currentRow].word[oldSelectedJ].selected = false;
         }
     }
-      
+
+    // Sets a letter into the selected inputs table box
+    setLetter(letterToSet){
+        // Searching for the selected inputs table's box
+        for(let row of this.rows){
+            for(let letter of row.word){
+                if(letter.selected){          
+                    if(letterToSet == "←")  letter.key.letter = "";
+                    else letter.key.letter = letterToSet;
+                    break;
+                }
+            }
+        }
+    }
+    
+    // Selects the next available box
+    // Called when the user definitely choses a letter 
+    selectNextBox(row = this.currentRow){
+        let selectedColumn = this.getSelectedBoxColumn();
+
+        // Trying the box to the right of selected
+        if(selectedColumn < this.wordSize - 1){
+            let testColumn = selectedColumn;
+            while(testColumn < this.wordSize - 1){
+                // If box to the right has not been filled
+                if(this.isBoxBlanck(testColumn + 1)){
+                    this.swapBoxSelection(selectedColumn, testColumn + 1);
+                    return true;
+                }
+                testColumn++;
+            }
+        }
+
+        // Trying the boxes from the left
+        for(let i = 0; i < selectedColumn; i++){
+            if(this.rows[row].word[i].key.letter == "") {
+                this.swapBoxSelection(selectedColumn, i);
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    // Swaps selection of current box for another
+    swapBoxSelection(curColumn, destColumn, curRow = this.currentRow, destRow = this.currentRow){
+        this.rows[curRow].word[curColumn].selected = false;
+        this.rows[destRow].word[destColumn].selected = true;
+    }
+
+    // Returns the column number for the selected box 
+    getSelectedBoxColumn(row = this.currentRow){
+        for(let i = 0; i < this.rows[this.currentRow].word.length; i++){
+            if(this.rows[row].word[i].selected)
+                return i;
+        }
+
+        return false;
+    }
+
+    // If a box is is blanck or has been filled in 
+    isBoxBlanck(column, row = this.currentRow){
+        if(this.rows[row].word[column].key.letter == "")
+            return true;
+        else
+            return false;
+    }
+
+    // After pressed enter
+    endPhase(){
+
+    }
 }
