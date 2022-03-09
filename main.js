@@ -10,11 +10,16 @@ let selectedBox = {         // The box that is being modified by the user
   y: 0
 }
 
+// Full list from: https://www.ime.usp.br/~pf/dicios/index.html
+// Filtered by /Database/FiltrosLetras.py
+let secretWord;             // Secret word to be discovered
+
 function setup(){
   createCanvas(windowWidth, windowHeight);
   background(backColor);
   keyboard = new Keyboard();
-  inputs = new InputsTable(wordSize, nRows);               
+  inputs = new InputsTable(wordSize, nRows);      
+  secretWord = readTextFile("./Database/listaFiltrada.txt");
 }
 
 function draw(){
@@ -23,8 +28,7 @@ function draw(){
   // Selecting and applying stuff
   if (mouseIsPressed) {    
     // Inputs table
-    inputs.selectNewBox();
-    
+    inputs.selectNewBox();    
   }
 
   // User Input Rows stuff
@@ -55,4 +59,16 @@ function mouseReleased(event) {
     if(clickedKeyboardKey == "Enter")   inputs.endPhase();
     else if(clickedKeyboardKey != "←")  inputs.selectNextBox();
   }
+}
+
+// https://stackoverflow.com/questions/14446447/how-to-read-a-local-text-file
+// https://stackoverflow.com/questions/13709482/how-to-read-text-file-in-javascript
+function readTextFile(file){
+    var rawFile = new XMLHttpRequest();
+
+    rawFile.open("GET", file, false);
+    rawFile.send(null);
+
+    var returnValue = rawFile.responseText;
+    return returnValue;
 }
