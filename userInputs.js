@@ -147,7 +147,7 @@ class InputsTable{
             while(testColumn < this.wordSize - 1){
                 // If box to the right has not been filled
                 if(this.isBoxBlanck(testColumn + 1)){
-                    this.swapBoxSelection(selectedColumn, testColumn + 1);
+                    this.swapBoxSelection(testColumn + 1, selectedColumn);
                     return true;
                 }
                 testColumn++;
@@ -157,7 +157,7 @@ class InputsTable{
         // Trying the boxes from the left
         for(let i = 0; i < selectedColumn; i++){
             if(this.rows[row].word[i].key.letter == "") {
-                this.swapBoxSelection(selectedColumn, i);
+                this.swapBoxSelection(i, selectedColumn);
                 return true;
             }
         }
@@ -166,7 +166,7 @@ class InputsTable{
     }
 
     // Swaps selection of current box for another
-    swapBoxSelection(curColumn, destColumn, curRow = this.currentRow, destRow = this.currentRow){
+    swapBoxSelection(destColumn, curColumn = this.getSelectedBoxColumn(), destRow = this.currentRow, curRow = this.currentRow){
         this.rows[curRow].word[curColumn].selected = false;
         this.rows[destRow].word[destColumn].selected = true;
     }
@@ -189,18 +189,29 @@ class InputsTable{
             return false;
     }
 
+    // If all letters of a word (row) are filled in
+    isWordFull(){
+        for(let i = 0; i < this.wordSize; i++){
+            if(this.isBoxBlanck(i)) return false
+        }
+
+        return true
+    }
+
     // After pressed enter
     endPhase(){
-        if(this.currentRow < this.rows.length){
-            this.swapBoxSelection(this.getSelectedBoxColumn(), 0, this.currentRow, this.currentRow + 1);
+        if(!this.isWordFull()) return
+
+        if(this.currentRow < this.rows.length-1){
+            this.swapBoxSelection(0, this.getSelectedBoxColumn(), this.currentRow + 1, this.currentRow);
             this.currentRow++;
         }
-        else                                    this.endGame();
-        console.log("Phase ENDED");
+        else this.endGame();
+        // console.log("Phase ENDED");
     }
 
     // End of the game - splash screen
     endGame(){
-        console.log("Game ENDED")
+        console.log("Game ENDED");
     }
 }

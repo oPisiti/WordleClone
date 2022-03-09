@@ -52,7 +52,7 @@ function windowResized() {
 function mouseReleased(event) {
   let clickedKeyboardKey = keyboard.collision();
   if(clickedKeyboardKey) {
-    if(clickedKeyboardKey == "Enter") inputs.endPhase();
-    else                              inputs.selectNextBox();
+    if(clickedKeyboardKey == "Enter")   inputs.endPhase();
+    else if(clickedKeyboardKey != "←")  inputs.selectNextBox();
   }
 }
