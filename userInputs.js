@@ -122,6 +122,8 @@ class InputsTable{
 
     // Sets a letter into the selected inputs table box
     setLetter(letterToSet){
+        if(letterToSet == "Enter") return
+    
         // Searching for the selected inputs table's box
         for(let row of this.rows){
             for(let letter of row.word){
@@ -189,6 +191,16 @@ class InputsTable{
 
     // After pressed enter
     endPhase(){
+        if(this.currentRow < this.rows.length){
+            this.swapBoxSelection(this.getSelectedBoxColumn(), 0, this.currentRow, this.currentRow + 1);
+            this.currentRow++;
+        }
+        else                                    this.endGame();
+        console.log("Phase ENDED");
+    }
 
+    // End of the game - splash screen
+    endGame(){
+        console.log("Game ENDED")
     }
 }

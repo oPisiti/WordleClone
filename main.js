@@ -50,5 +50,9 @@ function windowResized() {
 }
 
 function mouseReleased(event) {
-  if(keyboard.collision()) inputs.selectNextBox();
+  let clickedKeyboardKey = keyboard.collision();
+  if(clickedKeyboardKey) {
+    if(clickedKeyboardKey == "Enter") inputs.endPhase();
+    else                              inputs.selectNextBox();
+  }
 }
