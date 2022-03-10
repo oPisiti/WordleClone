@@ -15,10 +15,13 @@ class Key{
 
         this.state = "av";
         this.backColors = {
-            "av":       [120, 78, 186],
-            "unav":     [50, 50, 50],
-            "mOver":    [27, 166, 15],
-            "selected": [20, 20, 20]
+            "av":                   [120, 78, 186],
+            "unav":                 [50, 50, 50],
+            "mOver":                [27, 166, 15],
+            "selected":             [20, 20, 20], 
+            "existsCorrectPlace":   [123, 209, 38],
+            "existsWrongPlace":     [122, 7, 19],
+            "notExists":            [25, 25, 25]
         }     
         this.mOver = false;
 

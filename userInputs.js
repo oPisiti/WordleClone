@@ -199,19 +199,58 @@ class InputsTable{
     }
 
     // After pressed enter
-    endPhase(){
+    endPhase(word){
         if(!this.isWordFull()) return
 
-        if(this.currentRow < this.rows.length-1){
+        // https://pt.stackoverflow.com/questions/237762/remover-acentos-javascript
+        let correctedWord = word.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
+
+        // Checking the letters
+        for(let i = 0; i < this.wordSize; i++){
+            let match = false;
+            for(let j = 0; j < correctedWord.length; j++){
+                if(correctedWord[j] == this.rows[this.currentRow].word[i].key.letter){
+                    match = true; 
+                    if(i == j){
+                        this.rows[this.currentRow].word[i].state = "existsCorrectPlace";                           
+                        break
+                    }
+                    else this.rows[this.currentRow].word[i].state = "existsWrongPlace";    
+                }
+            }
+
+            if(!match) this.rows[this.currentRow].word[i].state = "notExists";            
+        }
+
+        // If won
+        if(this.hasWon(correctedWord))      this.endGame(word, true);
+
+        // Selecting next row or end game if is last row        
+        if(!this.hasWon(correctedWord))     this.endGame(word, false);
+        else if(this.currentRow < this.rows.length-1){
             this.swapBoxSelection(0, this.getSelectedBoxColumn(), this.currentRow + 1, this.currentRow);
             this.currentRow++;
         }
-        else this.endGame();
-        // console.log("Phase ENDED");
+        
     }
 
     // End of the game - splash screen
-    endGame(){
+    endGame(word, won){
+        for(let i = 0; i < this.wordSize; i++){
+            this.rows[this.currentRow].word[i].key.letter = word[i];            
+        }
         console.log("Game ENDED");
+    }
+
+    // Checks if current word is correct
+    hasWon(correctedWord){
+        for(let i = 0; i < this.wordSize; i++){
+            for(let j = 0; j < correctedWord.length; j++){
+                if(correctedWord[j] != this.rows[this.currentRow].word[i].key.letter){
+                    return false
+                }
+            }
+        }
+        return true
     }
 }

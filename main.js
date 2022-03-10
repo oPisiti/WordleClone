@@ -13,13 +13,16 @@ let selectedBox = {         // The box that is being modified by the user
 // Full list from: https://www.ime.usp.br/~pf/dicios/index.html
 // Filtered by /Database/FiltrosLetras.py
 let secretWord;             // Secret word to be discovered
+let secretWordList;
 
 function setup(){
   createCanvas(windowWidth, windowHeight);
   background(backColor);
   keyboard = new Keyboard();
   inputs = new InputsTable(wordSize, nRows);      
-  secretWord = readTextFile("./Database/listaFiltrada.txt");
+  secretWordList = readTextFile("./Database/listaFiltrada.txt");
+  secretWord = secretWordList[4];
+  console.log(secretWord);
 }
 
 function draw(){
@@ -56,7 +59,7 @@ function windowResized() {
 function mouseReleased(event) {
   let clickedKeyboardKey = keyboard.collision();
   if(clickedKeyboardKey) {
-    if(clickedKeyboardKey == "Enter")   inputs.endPhase();
+    if(clickedKeyboardKey == "Enter")   inputs.endPhase(secretWord);
     else if(clickedKeyboardKey != "←")  inputs.selectNextBox();
   }
 }
@@ -67,8 +70,13 @@ function readTextFile(file){
     var rawFile = new XMLHttpRequest();
 
     rawFile.open("GET", file, false);
+
+    // https://stackoverflow.com/questions/1021086/reading-in-utf-8-file-javascript-xmlhttprequest-gives-bad-european-characters
+    // ==== IF ENCODING NOT UTF-8, ADAPT IT WITH FOLLOWING ====
+    // rawFile.overrideMimeType('text/xml; charset=iso-8859-1');
+
     rawFile.send(null);
 
-    var returnValue = rawFile.responseText;
-    return returnValue;
+    // https://stackoverflow.com/questions/8125709/how-to-split-newline
+    return rawFile.responseText.split(/\r?\n/);
 }
