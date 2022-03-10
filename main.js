@@ -19,10 +19,10 @@ function setup(){
   createCanvas(windowWidth, windowHeight);
   background(backColor);
   keyboard = new Keyboard();
-  inputs = new InputsTable(wordSize, nRows);      
+  inputs = new InputsTable(wordSize, nRows);  
+      
   secretWordList = readTextFile("./Database/listaFiltrada.txt");
-  secretWord = secretWordList[4];
-  console.log(secretWord);
+  secretWord = secretWordList[Math.floor(Math.random() * secretWordList.length)];
 }
 
 function draw(){

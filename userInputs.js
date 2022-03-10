@@ -223,32 +223,39 @@ class InputsTable{
         }
 
         // If won
-        if(this.hasWon(correctedWord))      this.endGame(word, true);
-
-        // Selecting next row or end game if is last row        
-        if(!this.hasWon(correctedWord))     this.endGame(word, false);
-        else if(this.currentRow < this.rows.length-1){
-            this.swapBoxSelection(0, this.getSelectedBoxColumn(), this.currentRow + 1, this.currentRow);
-            this.currentRow++;
+        if(this.hasWon(correctedWord)){
+            this.endGame(word, true);
         }
-        
+        else{
+            // Selecting next row or end game if is last row        
+            if(this.currentRow < this.rows.length-1){
+                this.swapBoxSelection(0, this.getSelectedBoxColumn(), this.currentRow + 1, this.currentRow);
+                this.currentRow++;
+            }
+            else{
+                this.endGame(word, false);
+            }
+        }
     }
 
     // End of the game - splash screen
     endGame(word, won){
-        for(let i = 0; i < this.wordSize; i++){
-            this.rows[this.currentRow].word[i].key.letter = word[i];            
+        if(won){
+            for(let i = 0; i < this.wordSize; i++){
+                this.rows[this.currentRow].word[i].key.letter = word[i];            
+            }
         }
-        console.log("Game ENDED");
+        else{
+            console.log("LOST");
+        }
+        noLoop();
     }
 
     // Checks if current word is correct
     hasWon(correctedWord){
         for(let i = 0; i < this.wordSize; i++){
-            for(let j = 0; j < correctedWord.length; j++){
-                if(correctedWord[j] != this.rows[this.currentRow].word[i].key.letter){
-                    return false
-                }
+            if(correctedWord[i] != this.rows[this.currentRow].word[i].key.letter){
+                return false
             }
         }
         return true
