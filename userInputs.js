@@ -203,7 +203,7 @@ class InputsTable{
     }
 
     // After pressed enter
-    endPhase(word){
+    endPhase(word, keyboard){
         if(!this.isWordFull()) return
 
         // https://pt.stackoverflow.com/questions/237762/remover-acentos-javascript
@@ -223,7 +223,17 @@ class InputsTable{
                 }
             }
 
-            if(!match) this.rows[this.currentRow].word[i].state = "notExists";            
+            if(!match){
+                this.rows[this.currentRow].word[i].state = "notExists";            
+                
+                // Setting the color of the keyboard key to inactive
+                for(let key of keyboard.keys){
+                    if(key.key.letter == this.rows[this.currentRow].word[i].key.letter){
+                        key.state = "notExists"; 
+                        break
+                    }                        
+                }
+            }
         }
 
         // If won
