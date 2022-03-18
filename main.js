@@ -26,6 +26,19 @@ function setup(){
 }
 
 function draw(){
+  if(inputs.isGameOver){
+    splashColor = inputs.wonGame ? [12, 199, 18, 200]:[173, 0, 17, 200];
+    background(splashColor); 
+    
+    textAlign(CENTER, CENTER);
+    textSize(96);
+    fill(255);
+    text("Game Over!\nYou " + (inputs.wonGame ? "Won":"Lost"), width/2, height/2);
+    
+    noLoop();
+    return
+  }
+
   background(backColor); 
 
   // Selecting and applying stuff

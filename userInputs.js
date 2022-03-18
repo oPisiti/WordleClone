@@ -38,6 +38,10 @@ class InputsTable{
         }
         this.wordSize = wordSize;
         
+        // Taking care of ending the game
+        this.isGameOver = false;
+        this.wonGame = true;
+        
         this.rows = [];
         for(let i = 0; i < nRows; i++){
             this.rows.push(new RowOfInputs(this.initPosition, this.boxSize, this.keySpacing, wordSize, 50));
@@ -238,17 +242,18 @@ class InputsTable{
         }
     }
 
-    // End of the game - splash screen
+    // End of the game - calls splash screen
     endGame(word, won){
         if(won){
             for(let i = 0; i < this.wordSize; i++){
                 this.rows[this.currentRow].word[i].key.letter = word[i];            
             }
+            this.wonGame = true;
         }
         else{
-            console.log("LOST");
+            this.wonGame = false;
         }
-        noLoop();
+        this.isGameOver = true;
     }
 
     // Checks if current word is correct
