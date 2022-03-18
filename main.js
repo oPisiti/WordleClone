@@ -45,7 +45,19 @@ function draw(){
   }
   keyboard.render();
 
-  // noLoop();   
+  // Splash Screen
+  if(inputs.isGameOver){
+    splashColor = inputs.wonGame ? [12, 199, 18, 200]:[173, 0, 17, 200];
+    background(splashColor); 
+    
+    textAlign(CENTER, CENTER);
+    textSize(96);
+    fill(255);
+    text("Game Over!\nYou " + (inputs.wonGame ? "Won":"Lost"), width/2, height/2);
+    
+    noLoop();
+    return
+  }
 }
 
 // How to resize and remove scrollbars
@@ -59,7 +71,7 @@ function windowResized() {
 function mouseReleased(event) {
   let clickedKeyboardKey = keyboard.collision();
   if(clickedKeyboardKey) {
-    if(clickedKeyboardKey == "Enter")   inputs.endPhase(secretWord);
+    if(clickedKeyboardKey == "Enter")   inputs.endPhase(secretWord, keyboard);
     else if(clickedKeyboardKey != "←")  inputs.selectNextBox();
   }
 }
