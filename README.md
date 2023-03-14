@@ -9,7 +9,10 @@ A nice clone to wordle or term.ooo
 
 ## Getting list of possible words
 This repo includes a python script to filter a file for words with 5 letters and that are not names.
+
 In this repo, "Database/Words.txt" contains the entirety of the portuguese dictionary.
+
 Running "python FilterList.py <file name>" creates "Filtered<file name>".
+
 For the game to use this new filtered file, its name must be put in line 24 of main.js, at:
   - secretWordList = readTextFile("./Database/FilteredWords.txt");
