@@ -11,7 +11,7 @@ let selectedBox = {         // The box that is being modified by the user
 }
 
 // Full list from: https://www.ime.usp.br/~pf/dicios/index.html
-// Filtered by /Database/FiltrosLetras.py
+// Filtered by /Database/FilterList.py
 let secretWord;             // Secret word to be discovered
 let secretWordList;
 
@@ -21,7 +21,7 @@ function setup(){
   keyboard = new Keyboard();
   inputs = new InputsTable(wordSize, nRows);  
       
-  secretWordList = readTextFile("./Database/listaFiltrada.txt");
+  secretWordList = readTextFile("./Database/FilteredWords.txt");
   secretWord = secretWordList[Math.floor(Math.random() * secretWordList.length)];
 }
 
