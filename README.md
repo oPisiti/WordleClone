@@ -22,3 +22,11 @@ python3 FilterList.py <raw-list>"
 
 For the game to use this new filtered file, its name must be put in line 24 of main.js, at:
   - secretWordList = readTextFile("./Database/<filtered-list-file>");
+
+# P5js library
+
+This project uses the p5js library.
+
+Thank you to all the contributors.
+
+For the latest release, go to https://p5js.org/download/
