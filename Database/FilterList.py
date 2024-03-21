@@ -1,3 +1,6 @@
+#  Author:  Lauro França @oPisiti
+#  Created: 2024
+
 import sys
 
 def filter_list(source_list_name: str) -> None:
