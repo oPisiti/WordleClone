@@ -1,5 +1,12 @@
-// Author:  Lauro França @oPisiti
-// Created: 2024
+// ********************************************************************
+//  Author: Lauro França (oPisiti)                                    #
+//  Contact:                                                          #
+//    github: oPisiti                                                 #
+//    Email: contact@opisiti.com                                      #
+//  Date: 2024                                                        #
+//  Description:                                                      #
+//    A nice clone to wordle or term.ooo, made with p5js              #
+// ********************************************************************
 
 let backColor = (50, 50, 50);
 let keyboard;

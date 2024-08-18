@@ -1,5 +1,12 @@
-#  Author:  Lauro França @oPisiti
-#  Created: 2024
+#********************************************************************
+# Author: Lauro França (oPisiti)                                    #
+# Contact:                                                          #
+#   github: oPisiti                                                 #
+#   Email: contact@opisiti.com                                      #
+# Date: 2024                                                        #
+# Description:                                                      #
+#   A helper module for parsing a filtering words for the database  #
+#********************************************************************
 
 import sys
 

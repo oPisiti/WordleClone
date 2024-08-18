@@ -1,5 +1,12 @@
-// Author:  Lauro França @oPisiti
-// Created: 2024
+// ********************************************************************
+//  Author: Lauro França (oPisiti)                                    #
+//  Contact:                                                          #
+//    github: oPisiti                                                 #
+//    Email: contact@opisiti.com                                      #
+//  Date: 2024                                                        #
+//  Description:                                                      #
+//    Helper functions for dealing with inputs                        #
+// ********************************************************************
 
 class RowOfInputs{
     constructor(startPos, boxSize, keySpacing, wordSize, letterRenderSize){
